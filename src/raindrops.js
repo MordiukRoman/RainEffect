@@ -305,7 +305,7 @@ Raindrops.prototype={
         //update position
         let moved=drop.momentum>0;
         if(moved && !drop.killed){
-          drop.y+=drop.momentum*this.options.globalTimeScale;
+          drop.y-=drop.momentum*this.options.globalTimeScale;
           drop.x+=drop.momentumX*this.options.globalTimeScale;
           if(drop.y>(this.height/this.scale)+drop.r){
             drop.killed=true;
@@ -341,7 +341,7 @@ Raindrops.prototype={
                   targetR=this.maxR;
                 }
                 drop.r=targetR;
-                drop.momentumX+=dx*0.1;
+                drop.momentumX+=dx*0.5;
                 drop.spreadX=0;
                 drop.spreadY=0;
                 drop2.killed=true;
@@ -354,8 +354,8 @@ Raindrops.prototype={
         //slowdown momentum
         drop.momentum-=Math.max(1,(this.options.minR*0.5)-drop.momentum)*0.1*timeScale;
         if(drop.momentum<0) drop.momentum=0;
-        drop.momentumX*=Math.pow(0.7,timeScale);
-
+        drop.momentumX-=Math.max(1,(this.options.minR*0.5)-drop.momentumX)*0.1*timeScale;
+        if(drop.momentumX<0) drop.momentumX=0;
 
         if(!drop.killed){
           newDrops.push(drop);
