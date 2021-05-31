@@ -305,7 +305,7 @@ Raindrops.prototype={
         //update position
         let moved=drop.momentum>0;
         if(moved && !drop.killed){
-          drop.y-=drop.momentum*this.options.globalTimeScale;
+          drop.y+=drop.momentum*this.options.globalTimeScale;
           drop.x+=drop.momentumX*this.options.globalTimeScale;
           if(drop.y>(this.height/this.scale)+drop.r){
             drop.killed=true;

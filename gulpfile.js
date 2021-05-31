@@ -4,12 +4,15 @@ var gulp = require('gulp'),
   browserify = require('browserify'),
   uglify = require('gulp-uglify'),
   streamify = require('gulp-streamify'),
-  babelify = require("babelify");
+  babelify = require("babelify"),
 	gsap = require("gsap");
 	glslify = require("glslify");
 
+  var browserSync = require('browser-sync').create();
+
+
 function compileJS(file){
-  browserify('src/'+file+'.js',{debug:true})
+  return browserify('src/'+file+'.js',{debug:true})
     .transform(babelify)
     .transform('glslify')
     .bundle()
@@ -18,13 +21,33 @@ function compileJS(file){
     .pipe(streamify(uglify()))
     .pipe(gulp.dest('demo/js'));
 }
-gulp.task('default',['js1','js2','js3'],function(){});
+// gulp.task('default',['js1','js2','js3'],function(){});
 gulp.task('js1',function(){
-  compileJS('index');
+  return compileJS('index');
 });
 gulp.task('js2',function(){
   compileJS('index2');
 });
 gulp.task('js3',function(){
   compileJS('index3');
+});
+
+
+// create a task that ensures the `js` task is complete before
+// reloading browsers
+gulp.task('js-watch', ['js1'], function (done) {
+  browserSync.reload();
+  done();
+});
+
+
+// Static server
+gulp.task('default', ['js1'], function() {
+  browserSync.init({
+    server: {
+      baseDir: "./"
+    }
+  });
+
+  gulp.watch("src/*.js", ['js-watch']);
 });
