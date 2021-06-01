@@ -96,10 +96,10 @@ function init(){
     dpi,
     dropAlpha,
     dropColor,{
-      trailRate:1,
-      trailScaleRange:[0.2,0.45],
-      collisionRadius : 0.45,
-      dropletsCleaningRadiusMultiplier : 0.28,
+      // trailRate:1,
+      // trailScaleRange:[0.2,0.45],
+      // collisionRadius : 0.45,
+      // dropletsCleaningRadiusMultiplier : 0.28,
     }
   );
 

@@ -94,11 +94,11 @@ Raindrops.prototype={
     return Math.sqrt(this.area/(1024*768));
   },
   drawDroplet(x,y,r){
-    this.drawDrop(this.dropletsCtx,Object.assign(Object.create(Drop),{
-      x:x*this.dropletsPixelDensity,
-      y:y*this.dropletsPixelDensity,
-      r:r*this.dropletsPixelDensity
-    }));
+    // this.drawDrop(this.dropletsCtx,Object.assign(Object.create(Drop),{
+    //   x:x*this.dropletsPixelDensity,
+    //   y:y*this.dropletsPixelDensity,
+    //   r:r*this.dropletsPixelDensity
+    // }));
   },
 
   renderDropsGfx(){
@@ -265,9 +265,9 @@ Raindrops.prototype={
       if(!drop.killed){
         // update gravity
         // (chance of drops "creeping down")
-        if(chance((drop.r-(this.options.minR*this.options.dropFallMultiplier)) * (0.1/this.deltaR) * timeScale)){
-          drop.momentum += random((drop.r/this.options.maxR)*4);
-        }
+        // if(chance((drop.r-(this.options.minR*this.options.dropFallMultiplier)) * (0.1/this.deltaR) * timeScale)){
+        //   drop.momentum += random((drop.r/this.options.maxR)*4);
+        // }
         // clean small drops
         if(this.options.autoShrink && drop.r<=this.options.minR && chance(0.05*timeScale)){
           drop.shrink+=0.01;
@@ -341,7 +341,7 @@ Raindrops.prototype={
                   targetR=this.maxR;
                 }
                 drop.r=targetR;
-                drop.momentumX+=dx*0.5;
+                drop.momentumX+=dx*0.1;
                 drop.spreadX=0;
                 drop.spreadY=0;
                 drop2.killed=true;
@@ -354,8 +354,7 @@ Raindrops.prototype={
         //slowdown momentum
         drop.momentum-=Math.max(1,(this.options.minR*0.5)-drop.momentum)*0.1*timeScale;
         if(drop.momentum<0) drop.momentum=0;
-        drop.momentumX-=Math.max(1,(this.options.minR*0.5)-drop.momentumX)*0.1*timeScale;
-        if(drop.momentumX<0) drop.momentumX=0;
+        drop.momentumX*=Math.pow(0.7,timeScale);
 
         if(!drop.killed){
           newDrops.push(drop);
