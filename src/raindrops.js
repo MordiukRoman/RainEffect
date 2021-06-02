@@ -32,7 +32,7 @@ const defaultOptions={
   globalTimeScale:1,
   trailRate:1,
   autoShrink:true,
-  spawnArea:[-0.1,0.95],
+  spawnArea:[-0.1,0.25],
   trailScaleRange:[0.2,0.5],
   collisionRadius:0.65,
   collisionRadiusIncrease:0.01,
@@ -200,6 +200,7 @@ Raindrops.prototype={
           return Math.pow(n,3);
         });
         let rainDrop=this.createDrop({
+          // find function that return more results to the ranged values [-10, 10] -> 9,10 more likely then 0
           x:random(this.width/this.scale),
           y:random((this.height/this.scale)*this.options.spawnArea[0],(this.height/this.scale)*this.options.spawnArea[1]),
           r:r,
@@ -225,33 +226,33 @@ Raindrops.prototype={
   clearTexture(){
     this.textureCleaningIterations=50;
   },
-  updateDroplets(timeScale){
-    if(this.textureCleaningIterations>0){
-      this.textureCleaningIterations-=1*timeScale;
-      this.dropletsCtx.globalCompositeOperation="destination-out";
-      this.dropletsCtx.fillStyle="rgba(0,0,0,"+(0.05*timeScale)+")";
-      this.dropletsCtx.fillRect(0,0,
-        this.width*this.dropletsPixelDensity,this.height*this.dropletsPixelDensity);
-    }
-    if(this.options.raining){
-      this.dropletsCounter+=this.options.dropletsRate*timeScale*this.areaMultiplier;
-      times(this.dropletsCounter,(i)=>{
-        this.dropletsCounter--;
-        this.drawDroplet(
-          random(this.width/this.scale),
-          random(this.height/this.scale),
-          random(...this.options.dropletsSize,(n)=>{
-            return n*n;
-          })
-        )
-      });
-    }
-    this.ctx.drawImage(this.droplets,0,0,this.width,this.height);
-  },
+  // updateDroplets(timeScale){
+  //   if(this.textureCleaningIterations>0){
+  //     this.textureCleaningIterations-=1*timeScale;
+  //     this.dropletsCtx.globalCompositeOperation="destination-out";
+  //     this.dropletsCtx.fillStyle="rgba(0,0,0,"+(0.05*timeScale)+")";
+  //     this.dropletsCtx.fillRect(0,0,
+  //       this.width*this.dropletsPixelDensity,this.height*this.dropletsPixelDensity);
+  //   }
+  //   if(this.options.raining){
+  //     this.dropletsCounter+=this.options.dropletsRate*timeScale*this.areaMultiplier;
+  //     times(this.dropletsCounter,(i)=>{
+  //       this.dropletsCounter--;
+  //       this.drawDroplet(
+  //         random(this.width/this.scale),
+  //         random(this.height/this.scale),
+  //         random(...this.options.dropletsSize,(n)=>{
+  //           return n*n;
+  //         })
+  //       )
+  //     });
+  //   }
+  //   this.ctx.drawImage(this.droplets,0,0,this.width,this.height);
+  // },
   updateDrops(timeScale){
     let newDrops=[];
 
-    this.updateDroplets(timeScale);
+    // this.updateDroplets(timeScale);
     let rainDrops=this.updateRain(timeScale);
     newDrops=newDrops.concat(rainDrops);
 
@@ -307,7 +308,7 @@ Raindrops.prototype={
         if(moved && !drop.killed){
           drop.y+=drop.momentum*this.options.globalTimeScale;
           drop.x+=drop.momentumX*this.options.globalTimeScale;
-          if(drop.y>(this.height/this.scale)+drop.r){
+          if(drop.y>(this.height/10*this.scale)+drop.r){
             drop.killed=true;
           }
         }
