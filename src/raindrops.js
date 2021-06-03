@@ -199,9 +199,15 @@ Raindrops.prototype={
         let r=random(this.options.minR,this.options.maxR,(n)=>{
           return Math.pow(n,3);
         });
+        let randommm = Math.floor(random(3));
+        let gap = (this.width * 0.1)/this.scale;
+        let step = (this.width/this.scale) - gap;
+        let x = gap/2 + randommm * (step/2);
+        // console.log(x)
         let rainDrop=this.createDrop({
           // find function that return more results to the ranged values [-10, 10] -> 9,10 more likely then 0
-          x:random(this.width/this.scale),
+          // x:random(this.width/this.scale),
+          x: x,
           y:random((this.height/this.scale)*this.options.spawnArea[0],(this.height/this.scale)*this.options.spawnArea[1]),
           r:r,
           momentum:1+((r-this.options.minR)*0.1)+random(2),
