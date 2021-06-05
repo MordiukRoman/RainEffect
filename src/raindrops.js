@@ -29,7 +29,7 @@ const defaultOptions={
   dropletsSize:[2,4],
   dropletsCleaningRadiusMultiplier:0.43,
   raining:true,
-  globalTimeScale:1,
+  globalTimeScale:0.5,
   trailRate:1,
   autoShrink:true,
   spawnArea:[-0.1,0.25],
@@ -311,10 +311,13 @@ Raindrops.prototype={
 
         //update position
         let moved=drop.momentum>0;
+        let desiredPos = { x: this.width/(2*this.scale), y: this.height/(2*this.scale) }
         if(moved && !drop.killed){
-          drop.y+=drop.momentum*this.options.globalTimeScale;
-          drop.x+=drop.momentumX*this.options.globalTimeScale;
-          if(drop.y>(this.height/10*this.scale)+drop.r){
+          let stepY = (desiredPos.y - drop.y)/100;
+          let stepX = (desiredPos.x - drop.x)/50;
+          drop.y+=drop.momentum*this.options.globalTimeScale+stepY;
+          drop.x+=drop.momentumX*this.options.globalTimeScale+stepX;
+          if(drop.y>(this.height/(2*this.scale))+drop.r*2){
             drop.killed=true;
           }
         }
