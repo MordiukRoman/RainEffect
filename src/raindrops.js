@@ -281,6 +281,7 @@ Raindrops.prototype={
         }
         //update shrinkage
         drop.r -= drop.shrink*timeScale;
+        // if(drop.r<=0 || drop.r >= this.options.maxR*2) drop.killed=true;
         if(drop.r<=0) drop.killed=true;
 
         // update trails
@@ -315,8 +316,10 @@ Raindrops.prototype={
         if(moved && !drop.killed){
           let stepY = (desiredPos.y - drop.y)/100;
           let stepX = (desiredPos.x - drop.x)/50;
-          drop.y+=drop.momentum*this.options.globalTimeScale+stepY;
-          drop.x+=drop.momentumX*this.options.globalTimeScale+stepX;
+          drop.y+=(drop.momentum/10)*this.options.globalTimeScale + stepY;
+          drop.x+=drop.momentumX*this.options.globalTimeScale + stepX;
+          // drop.y+=drop.momentum*this.options.globalTimeScale+stepY;
+          // drop.x+=drop.momentumX*this.options.globalTimeScale+stepX;
           if(drop.y>(this.height/(2*this.scale))+drop.r*2){
             drop.killed=true;
           }
@@ -347,8 +350,8 @@ Raindrops.prototype={
                 let a1=pi*(r1*r1);
                 let a2=pi*(r2*r2);
                 let targetR=Math.sqrt((a1+(a2*0.8))/pi);
-                if(targetR>this.maxR){
-                  targetR=this.maxR;
+                if(targetR>this.options.maxR){
+                  targetR=this.options.maxR;
                 }
                 drop.r=targetR;
                 drop.momentumX+=dx*0.1;
