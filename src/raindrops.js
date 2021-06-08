@@ -285,26 +285,26 @@ Raindrops.prototype={
         if(drop.r<=0) drop.killed=true;
 
         // update trails
-        if(this.options.raining){
-          drop.lastSpawn+=drop.momentum*timeScale*this.options.trailRate;
-          if(drop.lastSpawn>drop.nextSpawn){
-            let trailDrop=this.createDrop({
-              x:drop.x+(random(-drop.r,drop.r)*0.1),
-              y:drop.y-(drop.r*0.01),
-              r:drop.r*random(...this.options.trailScaleRange),
-              spreadY:drop.momentum*0.1,
-              parent:drop,
-            });
+        // if(this.options.raining){
+        //   drop.lastSpawn+=drop.momentum*timeScale*this.options.trailRate;
+        //   if(drop.lastSpawn>drop.nextSpawn){
+        //     let trailDrop=this.createDrop({
+        //       x:drop.x+(random(-drop.r,drop.r)*0.1),
+        //       y:drop.y-(drop.r*0.01),
+        //       r:drop.r*random(...this.options.trailScaleRange),
+        //       spreadY:drop.momentum*0.1,
+        //       parent:drop,
+        //     });
 
-            if(trailDrop!=null){
-              newDrops.push(trailDrop);
+        //     if(trailDrop!=null){
+        //       newDrops.push(trailDrop);
 
-              drop.r*=Math.pow(0.97,timeScale);
-              drop.lastSpawn=0;
-              drop.nextSpawn=random(this.options.minR,this.options.maxR)-(drop.momentum*2*this.options.trailRate)+(this.options.maxR-drop.r);
-            }
-          }
-        }
+        //       drop.r*=Math.pow(0.97,timeScale);
+        //       drop.lastSpawn=0;
+        //       drop.nextSpawn=random(this.options.minR,this.options.maxR)-(drop.momentum*2*this.options.trailRate)+(this.options.maxR-drop.r);
+        //     }
+        //   }
+        // }
 
         //normalize spread
         drop.spreadX*=Math.pow(0.4,timeScale);
@@ -315,8 +315,9 @@ Raindrops.prototype={
         let desiredPos = { x: this.width/(2*this.scale), y: this.height/(2*this.scale) }
         if(moved && !drop.killed){
           let stepY = (desiredPos.y - drop.y)/100;
-          let stepX = (desiredPos.x - drop.x)/50;
-          drop.y+=(drop.momentum/10)*this.options.globalTimeScale + stepY;
+          let stepX = (desiredPos.x - drop.x)/100;
+          // drop.y+=(drop.momentum/10)*this.options.globalTimeScale + stepY;
+          drop.y+=stepY;
           drop.x+=drop.momentumX*this.options.globalTimeScale + stepX;
           // drop.y+=drop.momentum*this.options.globalTimeScale+stepY;
           // drop.x+=drop.momentumX*this.options.globalTimeScale+stepX;
