@@ -32,7 +32,7 @@ const defaultOptions={
   globalTimeScale:0.5,
   trailRate:1,
   autoShrink:true,
-  spawnArea:[-0.1,0.25],
+  spawnArea:[-0.1,1],
   trailScaleRange:[0.2,0.5],
   collisionRadius:0.65,
   collisionRadiusIncrease:0.01,
@@ -199,16 +199,20 @@ Raindrops.prototype={
         let r=random(this.options.minR,this.options.maxR,(n)=>{
           return Math.pow(n,3);
         });
-        let randommm = Math.floor(random(3));
-        let gap = (this.width * 0.1)/this.scale;
-        let step = (this.width/this.scale) - gap;
-        let x = gap/2 + randommm * (step/2);
-        // console.log(x)
+        let gapX = (this.width * 0.1)/this.scale;
+        let gapY = (this.height * 0.1)/this.scale;
+        let innerWidth = (this.width*0.8)/this.scale;
+        let innerHeight = (this.height*0.8)/this.scale;
+        let stepX = innerWidth/2;
+        let stepY = innerHeight/2;
+        let positions = [[0, 0], [0, 1], [0, 2], [1, 0], [2, 0], [1, 2], [2, 1], [2, 2]];
+        let [x, y] = positions[Math.floor(random(positions.length))]
         let rainDrop=this.createDrop({
           // find function that return more results to the ranged values [-10, 10] -> 9,10 more likely then 0
+          x: gapX + x*stepX,
+          y: gapY + y*stepY,
           // x:random(this.width/this.scale),
-          x: x,
-          y:random((this.height/this.scale)*this.options.spawnArea[0],(this.height/this.scale)*this.options.spawnArea[1]),
+          // y:random((this.height/this.scale)*this.options.spawnArea[0],(this.height/this.scale)*this.options.spawnArea[1]),
           r:r,
           momentum:1+((r-this.options.minR)*0.1)+random(2),
           spreadX:1.5,
@@ -321,7 +325,7 @@ Raindrops.prototype={
           drop.x+=drop.momentumX*this.options.globalTimeScale + stepX;
           // drop.y+=drop.momentum*this.options.globalTimeScale+stepY;
           // drop.x+=drop.momentumX*this.options.globalTimeScale+stepX;
-          if(drop.y>(this.height/(2*this.scale))+drop.r*2){
+          if(drop.y>(this.height/this.scale)+drop.r*2){
             drop.killed=true;
           }
         }
