@@ -328,7 +328,21 @@ Raindrops.prototype={
           if(drop.y>(this.height/this.scale)+drop.r*2){
             drop.killed=true;
           }
+
+          const centerCircle = {
+            y: this.height/(2*this.scale),
+            x: this.width/(2*this.scale),
+            r: 100,
+          }
+
+          const distance = (c1, c2) => Math.sqrt(Math.pow(c1.x - c2.x, 2) + Math.pow(c1.y - c2.y, 2))
+
+          if (distance(drop, centerCircle) < drop.r + centerCircle.r) {
+            drop.killed = true;
+          }
         }
+
+
 
         // collision
         let checkCollision=(moved || drop.isNew) && !drop.killed;
