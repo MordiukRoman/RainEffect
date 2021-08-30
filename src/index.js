@@ -123,10 +123,27 @@ function init(){
 
 function setupEvents(){
 
+  setupOnClick();
   setupParallax();
   setupWeather();
   setupFlash();
 }
+
+function setupOnClick(){
+  canvas.addEventListener('click',(event)=>{
+    let x=event.pageX;
+    let y=event.pageY;
+
+    raindrops.addDrop(
+      raindrops.createDrop({
+        x,
+        y,
+        r: random(10,20),
+      })
+    )
+  })
+}
+
 function setupParallax(){
   document.addEventListener('mousemove',(event)=>{
     let x=event.pageX;

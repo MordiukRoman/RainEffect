@@ -206,7 +206,7 @@ Raindrops.prototype={
         let stepX = innerWidth/2;
         let stepY = innerHeight/2;
         let positions = [[0, 0], [0, 1], [0, 2], [1, 0], [2, 0], [1, 2], [2, 1], [2, 2]];
-        let [x, y] = positions[Math.floor(random(positions.length))]
+        let [x, y] = positions[Math.floor(random(positions.length))];
         let rainDrop=this.createDrop({
           // find function that return more results to the ranged values [-10, 10] -> 9,10 more likely then 0
           x: gapX + x*stepX,
@@ -329,19 +329,24 @@ Raindrops.prototype={
             drop.killed=true;
           }
 
-          const centerCircle = {
-            y: this.height/(2*this.scale),
-            x: this.width/(2*this.scale),
-            r: 100,
-          }
+          // const centerCircle = {
+          //   y: this.height/(2*this.scale),
+          //   x: this.width/(2*this.scale),
+          //   r: 5,
+          // }
 
-          const distance = (c1, c2) => Math.sqrt(Math.pow(c1.x - c2.x, 2) + Math.pow(c1.y - c2.y, 2))
+          // const distance = (c1, c2) => Math.sqrt(Math.pow(c1.x - c2.x, 2) + Math.pow(c1.y - c2.y, 2))
 
-          if (distance(drop, centerCircle) < drop.r + centerCircle.r) {
-            drop.killed = true;
-          }
+          // if (distance(drop, centerCircle) < drop.r + centerCircle.r) {
+          //   drop.killed = true;
+          // }
         }
 
+        // if(isSecondeStage) {
+        //   if (drop.r >= 100) {
+        //     drop.momentum === 1;
+        //   }
+        // }
 
 
         // collision
