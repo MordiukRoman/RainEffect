@@ -22,14 +22,15 @@ function compileJS(file){
     .pipe(gulp.dest('demo/js'));
 }
 // gulp.task('default',['js1','js2','js3'],function(){});
+gulp.task('build',['js1','js2','js3'],function(){});
 gulp.task('js1',function(){
   return compileJS('index');
 });
 gulp.task('js2',function(){
-  compileJS('index2');
+  return compileJS('index2');
 });
 gulp.task('js3',function(){
-  compileJS('index3');
+  return compileJS('index3');
 });
 
 

@@ -4,6 +4,7 @@
   "description": "Rain Effects with WebGL and Canvas",
   "main": "gulpfile.js",
   "scripts": {
+    "build": "gulp build",
     "start": "gulp default",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src/"
